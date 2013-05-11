@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 技术 | 南山下]]></title>
+  <link href="http://lanqiushou.github.io/blog/categories/ji-zhu/atom.xml" rel="self"/>
+  <link href="http://lanqiushou.github.io/"/>
+  <updated>2013-05-11T11:07:20+08:00</updated>
+  <id>http://lanqiushou.github.io/</id>
+  <author>
+    <name><![CDATA[篮球手]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[手工查杀优盘中的病毒]]></title>
+    <link href="http://lanqiushou.github.io/blog/2013/05/10/kill-virus-in-your-disk-by-hand/"/>
+    <updated>2013-05-10T21:34:00+08:00</updated>
+    <id>http://lanqiushou.github.io/blog/2013/05/10/kill-virus-in-your-disk-by-hand</id>
+    <content type="html"><![CDATA[<h2>原理</h2>
+
+<hr />
+
+<p>病毒的运行一般是通过优盘根目录下的exe文件，而这个文件又是通过autorun.inf之类的自动执行文件来触发的。当用户<code>双击</code>或<code>右击-&gt;打开</code>或<code>右击-&gt;资源管理器</code>打开优盘时，autorun.inf中的shell语句</p>
+
+<blockquote><pre><code>open=xx.exe //xx为病毒exe文件  
+shell/open=打开  
+shell/open/command=xx.exe  
+...  
+</code></pre></blockquote>
+
+<p>就会触发病毒exe文件执行（上面第3行）。</p>
+
+<!-- more -->
+
+
+<h2>阻止运行</h2>
+
+<hr />
+
+<p>如果是单纯不让它运行， 而不是剿杀它，可以点击工具栏中的<code>文件夹</code>， 然后在左侧点击优盘盘符打开，这样病毒就不会运行。</p>
+
+<h2>剿杀</h2>
+
+<hr />
+
+<p>可在命令提示符下剿杀，步骤为</p>
+
+<h3>查看有无病毒文件</h3>
+
+<blockquote><pre><code>dir /a /s *.exe  
+</code></pre></blockquote>
+
+<p>若有可疑的exe文件（通常是<code>boot.exe</code>、<code>auto.exe</code>、<code>autorun.exe</code>等）可进一步确认，查看<code>autorun.inf</code>文件（若有病毒，一定会有这个文件）。可用</p>
+
+<blockquote><pre><code>type autorun.inf
+</code></pre></blockquote>
+
+<p>察看是否指向那些可疑的exe文件，若指向，便可以确定那些exe文件就是病毒！</p>
+
+<h3>删除</h3>
+
+<blockquote><pre><code>del /a /f 病毒文件名
+</code></pre></blockquote>
+
+<h2>优缺点</h2>
+
+<hr />
+
+<ul>
+<li>优点<br/>
+简单、快速、不需要杀毒软件，在任何地方都能进行杀毒。</li>
+<li><p>缺点<br/>
+有一些病毒会使每个文件夹下都生成一个跟文件夹名称相同的病毒exe文件， 如果文件夹比较多，查杀起来比较麻烦！</p>
+
+<p>  ©篮球宝宝</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

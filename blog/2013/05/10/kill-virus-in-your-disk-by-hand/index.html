@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>南山下</title>
+  <title>手工查杀优盘中的病毒 - 南山下</title>
   <meta name="author" content="篮球手">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://lanqiushou.github.io">
+  <link rel="canonical" href="http://lanqiushou.github.io/blog/2013/05/10/kill-virus-in-your-disk-by-hand">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="南山下" type="application/atom+xml">
@@ -63,15 +63,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/05/10/kill-virus-in-your-disk-by-hand/">手工查杀优盘中的病毒</a></h1>
+      <h1 class="entry-title">手工查杀优盘中的病毒</h1>
     
     
       <p class="meta">
@@ -94,7 +91,7 @@
   </header>
 
 
-  <div class="entry-content"><h2>原理</h2>
+<div class="entry-content"><h2>原理</h2>
 
 <hr />
 
@@ -108,23 +105,101 @@ shell/open/command=xx.exe
 
 <p>就会触发病毒exe文件执行（上面第3行）。</p>
 
+<!-- more -->
+
+
+<h2>阻止运行</h2>
+
+<hr />
+
+<p>如果是单纯不让它运行， 而不是剿杀它，可以点击工具栏中的<code>文件夹</code>， 然后在左侧点击优盘盘符打开，这样病毒就不会运行。</p>
+
+<h2>剿杀</h2>
+
+<hr />
+
+<p>可在命令提示符下剿杀，步骤为</p>
+
+<h3>查看有无病毒文件</h3>
+
+<blockquote><pre><code>dir /a /s *.exe  
+</code></pre></blockquote>
+
+<p>若有可疑的exe文件（通常是<code>boot.exe</code>、<code>auto.exe</code>、<code>autorun.exe</code>等）可进一步确认，查看<code>autorun.inf</code>文件（若有病毒，一定会有这个文件）。可用</p>
+
+<blockquote><pre><code>type autorun.inf
+</code></pre></blockquote>
+
+<p>察看是否指向那些可疑的exe文件，若指向，便可以确定那些exe文件就是病毒！</p>
+
+<h3>删除</h3>
+
+<blockquote><pre><code>del /a /f 病毒文件名
+</code></pre></blockquote>
+
+<h2>优缺点</h2>
+
+<hr />
+
+<ul>
+<li>优点<br/>
+简单、快速、不需要杀毒软件，在任何地方都能进行杀毒。</li>
+<li><p>缺点<br/>
+有一些病毒会使每个文件夹下都生成一个跟文件夹名称相同的病毒exe文件， 如果文件夹比较多，查杀起来比较麻烦！</p>
+
+<p>  ©篮球宝宝</p></li>
+</ul>
+
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/05/10/kill-virus-in-your-disk-by-hand/">Read on &rarr;</a>
-    </footer>
+
+<span class="byline author vcard">Posted by <span class="fn">篮球手</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2013-05-10T21:34:00+08:00" pubdate data-updated="true">May 10<span>th</span>, 2013</time>
+      
+
+<span class="categories">
   
-  <div class="pagination">
+    <a class='category' href='/blog/categories/ji-zhu/'>技术</a>
+  
+</span>
+
+
+    </p>
     
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -148,6 +223,7 @@ shell/open/command=xx.exe
 
   
 </aside>
+
 
     </div>
   </div>
