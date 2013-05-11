@@ -4,7 +4,7 @@
   <title><![CDATA[南山下]]></title>
   <link href="http://lanqiushou.github.io/atom.xml" rel="self"/>
   <link href="http://lanqiushou.github.io/"/>
-  <updated>2013-05-11T11:07:20+08:00</updated>
+  <updated>2013-05-11T12:18:25+08:00</updated>
   <id>http://lanqiushou.github.io/</id>
   <author>
     <name><![CDATA[篮球手]]></name>
@@ -14,10 +14,206 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Selenium 问题汇总]]></title>
+    <link href="http://lanqiushou.github.io/blog/2013/05/11/collection-of-selenium-problems/"/>
+    <updated>2013-05-11T12:11:00+08:00</updated>
+    <id>http://lanqiushou.github.io/blog/2013/05/11/collection-of-selenium-problems</id>
+    <content type="html"><![CDATA[<h3>缘起</h3>
+
+<hr />
+
+<p>现在的项目组用开源的Selenium做测试，但不得不说，这个东东bug奇多，下面是我遇到的一些问题，有些提供了解决方法，有些则需要继续研究，希望对各位看官有所帮助。</p>
+
+<h2>不能从命令行运行Selenium RC</h2>
+
+<hr />
+
+<p>刚开始用命令行运行Selenium RC的时候，看了官网上的运行命令介绍，本来是很简单的东西，但在我机器上就是死活不行。Firefox，IE，Safari都出现404错误，找不到页面。</p>
+
+<!-- more -->
+
+
+<p>解决方法：用代理服务器。默认的代理服务器是localhost：4444。但在设置代理的时候，Firefox和IE又是不一样的。IE在“工具”->“Internet选项”->“连接”->“局域网设置”里面设置了就好了。但是Firefox必须用一个参数-firefoxProfileTemplate才可以，因为Selenium RC在启动Firefox的时候，会启动一个初始的Firefox（即跟刚安装的Firefox一样，没有经过任何配置）。关于这个参数的应用，见我的另一篇文章《用Selenium RC从命令行运行Test Suite》。Safari跟IE是一样的，因为Safari代理服务器的设置就是调用IE Internet选项里面的东西。</p>
+
+<p>疑问：在这个问题上，我有一些疑问。官网上虽然提到了代理服务器，但是好像又说Selenium RC在运行的时候默认是使用代理的，也就是说它会自动给那些浏览器配置好代理，但是不知道为什么在IE和Firefox上不起作用。关于默认使用代理，我有两个“证据“，呵呵。一是我后来注意到如果使用Opera的话，是不需要任何设置的，这说明Selenium RC运行的时候应该是为这个浏览器配置了默认代理；二是官网上给出的运行参数中有一个是-avoidProxy，如果不是默认使用代理，这个参数又有什么意义呢！</p>
+
+<h2>弹出窗口的测试</h2>
+
+<hr />
+
+<p>项目组用到的Selenium测试大部分只是验证页面元素和页面上的链接，所以大部分时间都是用Selenium IDE做简单的脚本录制回放。但是在用IDE做弹出窗口的测试时（我不知道用“弹出窗口”这个术语合不合适，我指的是点击一个链接，这个链接会在新窗口中打开），问题就来了：脚本总是识别不了新窗口那个对象，所以老是在点击链接后选择新窗口这个地方卡住。</p>
+
+<p>解决方法：用Selenium RC运行这个脚本。这个也是我在无意之中解决的。我查了N多资料，发现对弹出窗口的测试这个地方Selenium是有一个bug的，但是有很多文章都提供了解决方案，就是用如下的方式：</p>
+
+<pre><code>"selectWindow" "windowTitle" ""
+
+"windowFocus" "" ""
+</code></pre>
+
+<p>但是偏偏我运行的时候就是不行。后来无意想到，有一篇文章说的是Selenium Core的运行方式和RC是不同的：Selenium Core是直接运行在浏览器上的，RC是运行在浏览器外的（这两句话，我也不是很理解）。Selenium IDE运行的时候是用Selenium Core的运行方式，也就是说脚本是直接运行在浏览器上的。虽然对这句话不是很理解，但是从字面意思上看，可以这么理解：脚本所在的容器是一个浏览器窗口，所以它只能操作本窗口之内的对象，对于selectWindow这种命令需要操作另外一个窗口，超出了它本身所在的容器的范围，所以它就无能为力了。果然，随着我问题一的解决，这个问题也随之解决了。</p>
+
+<h2>Safari不能运行</h2>
+
+<hr />
+
+<p>解决了问题一，设置了IE的代理，运行IE是可以，但Safari还是没有办法运行。我是直接用以下这个命令：</p>
+
+<pre><code>java -jar ...Selenium-Server.jar -htmlSuite "*safari" "..." "..." "..."
+</code></pre>
+
+<p>解决方法：把上面参数中的&#8221;<code>safari</code>&ldquo;改为&rdquo;<code>safariproxy</code>&ldquo;或者&rdquo;<code>custom C:/Program Files/Safari/Safari.exe</code>&ldquo;。（具体我忘了用哪种方式解决的了，试一下就好了）</p>
+
+<p>关于这个问题，我想多说一点，命令行运行Selenium RC时可以选择的浏览器类型参数（如上面的&#8221;safari&#8221;）是很多的，官网上只给出了很少的一部分（典型的文档更新跟不上软件的更新），下面是完整的列表：</p>
+
+<blockquote><p><em>firefox<br/>
+</em>firefoxproxy<br/>
+<em>chrome<br/>
+</em>iexploreproxy <br/>
+<em>pifirefox<br/>
+</em>iexplore<br/>
+<em>firefox3<br/>
+</em>safariproxy<br/>
+<em>googlechrome<br/>
+</em>konqueror<br/>
+<em>firefox2<br/>
+</em>safari<br/>
+<em>piiexplore<br/>
+</em>opera<br/>
+<em>iehta<br/>
+</em>custom</p></blockquote>
+
+<p>你可以在运行Selenium RC那个命令的时候故意把浏览器类型参数输错，这个列表便会显示出来。常用的应该还是官网的那几个，有一些参数尚在实验之中，用了可能会有点问题。对应的每一种浏览器都有几个参数可以用，如果常用的实在不行，用非常用的参数做，也未尝不是一种解决办法。再啰嗦一句，我一直以为这里的参数chrome就是google推出的那个浏览器，但是从上面的列表看，不是这样的。它属于Firefox的一个东西，如果要测试google的chrome浏览器，应该用googlechrome。</p>
+
+<h2>timeout不起作用</h2>
+
+<hr />
+
+<p>从命令行运行Selenium RC的时候-timeout参数貌似不起作用，我还没找到具体的解决办法，不过这个timeout也是可以在脚本里面设置的。</p>
+
+<p><strong><em>注：以上所用的测试环境</em></strong></p>
+
+<p><em>操作系统: WinXP Professional</em></p>
+
+<p><em>硬件配置: Intel P4 3.00G; 2G DDR2; 240G 硬盘（一块PATA，80G，XP安装在这个盘上；一块SATA，160G）</em></p>
+
+<p><em>浏览器：IE7.0; Firefox2.0; Safari3.2.2; Opera9.63; Chrome1.0</em></p>
+
+<p><strong><em>参考资源</em></strong></p>
+
+<hr />
+
+<ul>
+<li><p><a href="http://seleniumhq.org/">令人伤心的官网</a></p></li>
+<li><p><a href="http://seleniumhq.org/documentation/core/reference.html">比较有用的Selenese 命令参考</a></p></li>
+<li><p><a href="http://seleniumhq.org/documentation/tutorials/">集中讲解了如何用interactive的方式从命令行运行Selenium RC</a></p></li>
+<li><p><a href="http://seleniumhq.org/documentation/remote-control/" title="页面上的Options链接就是讲解从命令行运行Selenium RC的几个参数了，比较有用">与Selnium RC有关的文档（从首页上不太好找）</a></p></li>
+<li><p><a href="http://girliemangalo.wordpress.com/2009/02/05/creating-firefox-profile-for-your-selenium-rc-tests/">可以为Selenium RC专门做一个Firefox配置文件，这里有讲解</a></p>
+
+<p> ©篮球宝宝</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用Selenium RC从命令行运行Test Suite]]></title>
+    <link href="http://lanqiushou.github.io/blog/2013/05/11/run-test-suite-with-rc-from-shell/"/>
+    <updated>2013-05-11T12:10:00+08:00</updated>
+    <id>http://lanqiushou.github.io/blog/2013/05/11/run-test-suite-with-rc-from-shell</id>
+    <content type="html"><![CDATA[<h3>缘起</h3>
+
+<hr />
+
+<p>最近项目组在使用Selenium IDE和Selenium RC做测试。临时学了几天，从网上搜索资料，感觉这方面的文档真是太少了，（免费的开源软件，唉&hellip;），官方网站上就一个Selenese Command Reference还算是比较正规全面的文档，其他的几乎没有。Selenium RC的文档也只是简单介绍了从命令行运行用到的参数，也没有相应的例子。</p>
+
+<p>之前几天一直用Selelium IDE录制测试脚本，运行测试脚本和Test Suite， 后来需要用到Selenium RC，从命令行里运行Test Suite。本来看了Selenium RC的文档，以为一个命令就能搞定了，不就是一个</p>
+
+<pre><code>java selenium-server.jar -htmlSuite "*firefox" "http://..." "C:/TestSuite.html" "C:/result.html"
+</code></pre>
+
+<p>嘛！ （关于参数<code>-htmlSuite</code>的四个子参数的意义，不在此赘述，官网上这个还是有的。） 但偏偏是这个简单的命令在我的机器上一直运行不成功，老是提示页面错误或者不存在！ 憋了N天，真是头大~~ 最后还是在SDM的帮助下把这个搞定了。</p>
+
+<!-- more -->
+
+
+<h2>原因</h2>
+
+<hr />
+
+<p>原来是代理服务器惹的祸，Selenium RC要成功的运行是需要浏览器配置代理服务器的，但是如果只是用上述命令运行Test Suite， Selenium RC会启动一个初始化的Firefox浏览器 （即没有经过任何配置的浏览器，当然也不包括代理服务器的设置）。没有代理服务器，Selenium RC当然不能成功运行了！</p>
+
+<h2>解决</h2>
+
+<hr />
+
+<p>知道原因了，解决方法就显得简单了，用一个额外的参数<code>-firefoxProfileTemplate</code>就搞定了，所以整个命令就是：</p>
+
+<pre><code>java selenium-server.jar -htmlSuite "*firefox" "http://..." "C:/TestSuite.html" "C:/result.html" -firefoxProfileTemplate "C:/Documents and Settings/Administrator/Application Data/Mozilla/Firefox/Profiles/myProfile"
+</code></pre>
+
+<p>（这里firefox的profile文件的位置需要注意，一定是在&#8221;<code>C:/Documents and Settings/Administrator/Application Data</code>&ldquo;下面的，而不是&rdquo;<code>C:/Documents and Settings/Administrator/Local Settings/Application Data</code>&ldquo;下面的，否则还是不会成功运行。）</p>
+
+<p><strong><em>参考资源</em></strong></p>
+
+<hr />
+
+<ul>
+<li><p><a href="http://seleniumhq.org/">令人伤心的官网</a></p></li>
+<li><p><a href="http://seleniumhq.org/documentation/core/reference.html">比较有用的Selenese 命令参考</a></p></li>
+<li><p><a href="http://seleniumhq.org/documentation/tutorials/">集中讲解了如何用interactive的方式从命令行运行Selenium RC</a></p></li>
+<li><p><a href="http://seleniumhq.org/documentation/remote-control/" title="页面上的Options链接就是讲解从命令行运行Selenium RC的几个参数了，比较有用">与Selnium RC有关的文档（从首页上不太好找）</a></p></li>
+<li><p><a href="http://girliemangalo.wordpress.com/2009/02/05/creating-firefox-profile-for-your-selenium-rc-tests/">可以为Selenium RC专门做一个Firefox配置文件，这里有讲解</a></p>
+
+<p> ©篮球宝宝</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[优盘中文件夹不能显示解决之道]]></title>
+    <link href="http://lanqiushou.github.io/blog/2013/05/11/resolve-files-cannot-be-displayed/"/>
+    <updated>2013-05-11T11:52:00+08:00</updated>
+    <id>http://lanqiushou.github.io/blog/2013/05/11/resolve-files-cannot-be-displayed</id>
+    <content type="html"><![CDATA[<h3>缘起</h3>
+
+<hr />
+
+<p>最近遇到很多优盘中的文件夹不能显示的情况，在<code>“工具”-&gt;“文件夹选项”</code>中设置成<code>“显示系统文件夹中的内容”</code>、去掉“<code>隐藏受保护的操作系统文件（推荐）</code>”以及设置成“<code>显示所有文件和文件夹</code>”也不能正常显示。 这种情况一般是由于优盘中的文件夹被病毒设置成了<code>系统&amp;隐藏</code>属性造成的。</p>
+
+<!-- more -->
+
+
+<h2>解决</h2>
+
+<hr />
+
+<p><strong>用命令把文件夹中的系统&amp;隐藏属性去掉即可</strong></p>
+
+<ol>
+<li>转到优盘目录下</li>
+</ol>
+
+
+<p>2.1 对于单个文件或文件夹</p>
+
+<blockquote><pre><code>attrib -S -H 文件夹名称
+</code></pre></blockquote>
+
+<p>2.2 批量（对优盘中所有的文件和文件夹，一般用这个就可以了）</p>
+
+<blockquote><pre><code>attrib -S -H /s /d
+</code></pre></blockquote>
+
+<p>   ©篮球宝宝</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[手工查杀优盘中的病毒]]></title>
-    <link href="http://lanqiushou.github.io/blog/2013/05/10/kill-virus-in-your-disk-by-hand/"/>
+    <link href="http://lanqiushou.github.io/blog/2013/05/10/kill-virus-by-hand/"/>
     <updated>2013-05-10T21:34:00+08:00</updated>
-    <id>http://lanqiushou.github.io/blog/2013/05/10/kill-virus-in-your-disk-by-hand</id>
+    <id>http://lanqiushou.github.io/blog/2013/05/10/kill-virus-by-hand</id>
     <content type="html"><![CDATA[<h2>原理</h2>
 
 <hr />

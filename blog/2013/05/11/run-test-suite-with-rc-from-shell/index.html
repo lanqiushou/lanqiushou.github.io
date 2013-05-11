@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>南山下</title>
+  <title>用Selenium RC从命令行运行Test Suite - 南山下</title>
   <meta name="author" content="篮球手">
 
   
-  <meta name="description" content="缘起 现在的项目组用开源的Selenium做测试，但不得不说，这个东东bug奇多，下面是我遇到的一些问题，有些提供了解决方法，有些则需要继续研究，希望对各位看官有所帮助。 不能从命令行运行Selenium RC 刚开始用命令行运行Selenium RC的时候，看了官网上的运行命令介绍， &hellip;">
+  <meta name="description" content="缘起 最近项目组在使用Selenium IDE和Selenium RC做测试。临时学了几天，从网上搜索资料，感觉这方面的文档真是太少了，（免费的开源软件，唉&hellip;），官方网站上就一个Selenese Command Reference还算是比较正规全面的文档，其他的几乎没有。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://lanqiushou.github.io">
+  <link rel="canonical" href="http://lanqiushou.github.io/blog/2013/05/11/run-test-suite-with-rc-from-shell">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="南山下" type="application/atom+xml">
@@ -63,66 +63,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/05/11/collection-of-selenium-problems/">Selenium 问题汇总</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-11T12:11:00+08:00" pubdate data-updated="true">May 11<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>缘起</h3>
-
-<hr />
-
-<p>现在的项目组用开源的Selenium做测试，但不得不说，这个东东bug奇多，下面是我遇到的一些问题，有些提供了解决方法，有些则需要继续研究，希望对各位看官有所帮助。</p>
-
-<h2>不能从命令行运行Selenium RC</h2>
-
-<hr />
-
-<p>刚开始用命令行运行Selenium RC的时候，看了官网上的运行命令介绍，本来是很简单的东西，但在我机器上就是死活不行。Firefox，IE，Safari都出现404错误，找不到页面。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/05/11/collection-of-selenium-problems/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/11/run-test-suite-with-rc-from-shell/">用Selenium RC从命令行运行Test Suite</a></h1>
+      <h1 class="entry-title">用Selenium RC从命令行运行Test Suite</h1>
     
     
       <p class="meta">
@@ -145,7 +91,7 @@
   </header>
 
 
-  <div class="entry-content"><h3>缘起</h3>
+<div class="entry-content"><h3>缘起</h3>
 
 <hr />
 
@@ -158,121 +104,94 @@
 
 <p>嘛！ （关于参数<code>-htmlSuite</code>的四个子参数的意义，不在此赘述，官网上这个还是有的。） 但偏偏是这个简单的命令在我的机器上一直运行不成功，老是提示页面错误或者不存在！ 憋了N天，真是头大~~ 最后还是在SDM的帮助下把这个搞定了。</p>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/05/11/run-test-suite-with-rc-from-shell/">Read on &rarr;</a>
-    </footer>
-  
+<!-- more -->
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/11/resolve-files-cannot-be-displayed/">优盘中文件夹不能显示解决之道</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-11T11:52:00+08:00" pubdate data-updated="true">May 11<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>缘起</h3>
+<h2>原因</h2>
 
 <hr />
 
-<p>最近遇到很多优盘中的文件夹不能显示的情况，在<code>“工具”-&gt;“文件夹选项”</code>中设置成<code>“显示系统文件夹中的内容”</code>、去掉“<code>隐藏受保护的操作系统文件（推荐）</code>”以及设置成“<code>显示所有文件和文件夹</code>”也不能正常显示。 这种情况一般是由于优盘中的文件夹被病毒设置成了<code>系统&amp;隐藏</code>属性造成的。</p>
+<p>原来是代理服务器惹的祸，Selenium RC要成功的运行是需要浏览器配置代理服务器的，但是如果只是用上述命令运行Test Suite， Selenium RC会启动一个初始化的Firefox浏览器 （即没有经过任何配置的浏览器，当然也不包括代理服务器的设置）。没有代理服务器，Selenium RC当然不能成功运行了！</p>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/05/11/resolve-files-cannot-be-displayed/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/10/kill-virus-by-hand/">手工查杀优盘中的病毒</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-10T21:34:00+08:00" pubdate data-updated="true">May 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>原理</h2>
+<h2>解决</h2>
 
 <hr />
 
-<p>病毒的运行一般是通过优盘根目录下的exe文件，而这个文件又是通过autorun.inf之类的自动执行文件来触发的。当用户<code>双击</code>或<code>右击-&gt;打开</code>或<code>右击-&gt;资源管理器</code>打开优盘时，autorun.inf中的shell语句</p>
+<p>知道原因了，解决方法就显得简单了，用一个额外的参数<code>-firefoxProfileTemplate</code>就搞定了，所以整个命令就是：</p>
 
-<blockquote><pre><code>open=xx.exe //xx为病毒exe文件  
-shell/open=打开  
-shell/open/command=xx.exe  
-...  
-</code></pre></blockquote>
+<pre><code>java selenium-server.jar -htmlSuite "*firefox" "http://..." "C:/TestSuite.html" "C:/result.html" -firefoxProfileTemplate "C:/Documents and Settings/Administrator/Application Data/Mozilla/Firefox/Profiles/myProfile"
+</code></pre>
 
-<p>就会触发病毒exe文件执行（上面第3行）。</p>
+<p>（这里firefox的profile文件的位置需要注意，一定是在&#8221;<code>C:/Documents and Settings/Administrator/Application Data</code>&ldquo;下面的，而不是&rdquo;<code>C:/Documents and Settings/Administrator/Local Settings/Application Data</code>&ldquo;下面的，否则还是不会成功运行。）</p>
+
+<p><strong><em>参考资源</em></strong></p>
+
+<hr />
+
+<ul>
+<li><p><a href="http://seleniumhq.org/">令人伤心的官网</a></p></li>
+<li><p><a href="http://seleniumhq.org/documentation/core/reference.html">比较有用的Selenese 命令参考</a></p></li>
+<li><p><a href="http://seleniumhq.org/documentation/tutorials/">集中讲解了如何用interactive的方式从命令行运行Selenium RC</a></p></li>
+<li><p><a href="http://seleniumhq.org/documentation/remote-control/" title="页面上的Options链接就是讲解从命令行运行Selenium RC的几个参数了，比较有用">与Selnium RC有关的文档（从首页上不太好找）</a></p></li>
+<li><p><a href="http://girliemangalo.wordpress.com/2009/02/05/creating-firefox-profile-for-your-selenium-rc-tests/">可以为Selenium RC专门做一个Firefox配置文件，这里有讲解</a></p>
+
+<p> ©篮球宝宝</p></li>
+</ul>
 
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/05/10/kill-virus-by-hand/">Read on &rarr;</a>
-    </footer>
+
+<span class="byline author vcard">Posted by <span class="fn">篮球手</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2013-05-11T12:10:00+08:00" pubdate data-updated="true">May 11<span>th</span>, 2013</time>
+      
+
+<span class="categories">
   
-  <div class="pagination">
+    <a class='category' href='/blog/categories/ji-zhu/'>技术</a>
+  
+</span>
+
+
+    </p>
     
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/11/resolve-files-cannot-be-displayed/" title="Previous Post: 优盘中文件夹不能显示解决之道">&laquo; 优盘中文件夹不能显示解决之道</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/05/11/collection-of-selenium-problems/" title="Next Post: Selenium 问题汇总">Selenium 问题汇总 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -308,6 +227,7 @@ shell/open/command=xx.exe
 
   
 </aside>
+
 
     </div>
   </div>

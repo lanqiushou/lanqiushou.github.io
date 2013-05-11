@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>文摘 - 南山下</title>
+  <title>优盘中文件夹不能显示解决之道 - 南山下</title>
   <meta name="author" content="篮球手">
 
   
-  <meta name="description" content="文摘 有鸟止於南方之阜，其三年不动，将以定志意也；其不飞，将以长羽翼也；其不鸣，将以览民则也。是鸟虽无飞，飞将冲天；虽无鸣，鸣将骇人。
--《吕氏春秋·应审览第六·重言》2013-5-10 23:34:25 Recent Posts Selenium 问题汇总 用Selenium &hellip;">
+  <meta name="description" content="缘起 最近遇到很多优盘中的文件夹不能显示的情况，在“工具”-&gt;“文件夹选项”中设置成“显示系统文件夹中的内容”、去掉“隐藏受保护的操作系统文件（推荐）”以及设置成“显示所有文件和文件夹”也不能正常显示。 这种情况一般是由于优盘中的文件夹被病毒设置成了系统&amp;隐藏属性造成的。 解决 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://lanqiushou.github.io/notes">
+  <link rel="canonical" href="http://lanqiushou.github.io/blog/2013/05/11/resolve-files-cannot-be-displayed">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="南山下" type="application/atom+xml">
@@ -65,29 +64,114 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">文摘</h1>
     
-  </header>
-  
-  <blockquote><p>有鸟止於南方之阜，其三年不动，将以定志意也；其不飞，将以长羽翼也；其不鸣，将以览民则也。是鸟虽无飞，飞将冲天；虽无鸣，鸣将骇人。<br/>
-<em>-《吕氏春秋·应审览第六·重言》2013-5-10 23:34:25</em></p></blockquote>
+      <h1 class="entry-title">优盘中文件夹不能显示解决之道</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
 
   
-    <footer>
+
+
+<time datetime="2013-05-11T11:52:00+08:00" pubdate data-updated="true">May 11<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>缘起</h3>
+
+<hr />
+
+<p>最近遇到很多优盘中的文件夹不能显示的情况，在<code>“工具”-&gt;“文件夹选项”</code>中设置成<code>“显示系统文件夹中的内容”</code>、去掉“<code>隐藏受保护的操作系统文件（推荐）</code>”以及设置成“<code>显示所有文件和文件夹</code>”也不能正常显示。 这种情况一般是由于优盘中的文件夹被病毒设置成了<code>系统&amp;隐藏</code>属性造成的。</p>
+
+<!-- more -->
+
+
+<h2>解决</h2>
+
+<hr />
+
+<p><strong>用命令把文件夹中的系统&amp;隐藏属性去掉即可</strong></p>
+
+<ol>
+<li>转到优盘目录下</li>
+</ol>
+
+
+<p>2.1 对于单个文件或文件夹</p>
+
+<blockquote><pre><code>attrib -S -H 文件夹名称
+</code></pre></blockquote>
+
+<p>2.2 批量（对优盘中所有的文件和文件夹，一般用这个就可以了）</p>
+
+<blockquote><pre><code>attrib -S -H /s /d
+</code></pre></blockquote>
+
+<p>   ©篮球宝宝</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
       
+  
+
+<span class="byline author vcard">Posted by <span class="fn">篮球手</span></span>
+
       
-        <div class="sharing">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-11T11:52:00+08:00" pubdate data-updated="true">May 11<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ji-zhu/'>技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
   
   
   
 </div>
 
+    
+    <p class="meta">
       
-    </footer>
-  
+        <a class="basic-alignment left" href="/blog/2013/05/10/kill-virus-by-hand/" title="Previous Post: 手工查杀优盘中的病毒">&laquo; 手工查杀优盘中的病毒</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/05/11/run-test-suite-with-rc-from-shell/" title="Next Post: 用Selenium RC从命令行运行Test Suite">用Selenium RC从命令行运行Test Suite &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
 
 </div>
@@ -95,6 +179,10 @@
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>A little something about me.</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     

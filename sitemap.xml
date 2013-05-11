@@ -1,8 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://lanqiushou.github.io/blog/2013/05/10/kill-virus-in-your-disk-by-hand/</loc>
+        <loc>http://lanqiushou.github.io/blog/2013/05/10/kill-virus-by-hand/</loc>
         <lastmod>2013-05-10T22:55:26+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://lanqiushou.github.io/blog/2013/05/11/resolve-files-cannot-be-displayed/</loc>
+        <lastmod>2013-05-11T12:01:57+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://lanqiushou.github.io/blog/2013/05/11/run-test-suite-with-rc-from-shell/</loc>
+        <lastmod>2013-05-11T12:14:25+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://lanqiushou.github.io/blog/2013/05/11/collection-of-selenium-problems/</loc>
+        <lastmod>2013-05-11T12:16:14+08:00</lastmod>
     </url>
     <url>
         <loc>http://lanqiushou.github.io/about/</loc>
@@ -10,11 +22,11 @@
     </url>
     <url>
         <loc>http://lanqiushou.github.io/blog/archives/</loc>
-        <lastmod>2013-05-10T22:55:26+08:00</lastmod>
+        <lastmod>2013-05-11T12:16:14+08:00</lastmod>
     </url>
     <url>
         <loc>http://lanqiushou.github.io/</loc>
-        <lastmod>2013-05-10T22:55:26+08:00</lastmod>
+        <lastmod>2013-05-11T12:16:14+08:00</lastmod>
     </url>
     <url>
         <loc>http://lanqiushou.github.io/notes/</loc>
